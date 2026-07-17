@@ -1242,6 +1242,10 @@ function showPage(pageName) {
 }
 
 // API Fetch helper
+const BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+    ? '' 
+    : 'https://calorielens-lvnq.onrender.com';
+
 async function apiCall(endpoint, method = 'GET', body = null) {
     const headers = { 'Content-Type': 'application/json' };
     if (state.token) {
@@ -1250,7 +1254,7 @@ async function apiCall(endpoint, method = 'GET', body = null) {
     const config = { method, headers };
     if (body) config.body = JSON.stringify(body);
 
-    const res = await fetch(endpoint, config);
+    const res = await fetch(BASE_URL + endpoint, config);
     const d = await res.json();
     if (!res.ok) throw new Error(d.error || 'Server request failed.');
     return d;
