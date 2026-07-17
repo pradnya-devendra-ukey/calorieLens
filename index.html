@@ -1329,6 +1329,7 @@ async function handleAuth() {
         } else {
             showPage('dash');
         }
+        startSyncPolling();
     } catch (e) {
         errBar.textContent = e.message;
         errBar.classList.remove('hidden');
@@ -2205,6 +2206,7 @@ function toggleTheme() {
 // Logout handler
 function handleLogout() {
     if (!confirm('Are you sure you want to log out?')) return;
+    if (syncInterval) clearInterval(syncInterval);
     state.token = null;
     state.username = null;
     state.profile = {};
@@ -2244,6 +2246,41 @@ function toast(msg, type) {
     toastTimer = setTimeout(() => wrap.classList.add('hidden'), 3000);
 }
 
+// Real-Time Cross-Device Sync Polling
+let syncInterval;
+function startSyncPolling() {
+    if (syncInterval) clearInterval(syncInterval);
+    syncInterval = setInterval(async () => {
+        if (!state.token) return;
+        try {
+            const syncData = await apiCall('/api/data');
+            const newMeals = JSON.stringify(syncData.meals || []);
+            const oldMeals = JSON.stringify(state.meals);
+            const newProfile = JSON.stringify(syncData.profile || {});
+            const oldProfile = JSON.stringify(state.profile);
+
+            if (newMeals !== oldMeals || newProfile !== oldProfile) {
+                state.profile = syncData.profile || {};
+                state.target = syncData.target || 2200;
+                state.meals = syncData.meals || [];
+                state.chat_history = syncData.chat_history || [];
+                
+                save(S.MEALS, state.meals);
+                save(S.TARGET, state.target);
+                
+                refreshDash();
+                
+                const chatPage = $('page-chat');
+                if (chatPage && !chatPage.classList.contains('hidden')) {
+                    rebuildChatHistoryUI();
+                }
+            }
+        } catch (e) {
+            console.error("Background sync failed:", e);
+        }
+    }, 10000);
+}
+
 // Init lifecycle
 async function init() {
     applyTheme(state.theme);
@@ -2266,6 +2303,7 @@ async function init() {
                 showPage('dash');
                 rebuildChatHistoryUI();
             }
+            startSyncPolling();
         } catch (e) {
             // Token might be invalid/expired, redirect to auth
             state.token = null;
