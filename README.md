@@ -1,3 +1,12 @@
+---
+title: CalorieLens
+emoji: 🥗
+colorFrom: green
+colorTo: yellow
+sdk: static
+pinned: false
+---
+
 # 🥗 CalorieLens — AI-Powered Calorie Tracking
 
 Upload a photo of your meal and get instant AI-powered calorie and nutrition analysis. Track your daily intake towards your weight loss, gain, or maintenance goals.

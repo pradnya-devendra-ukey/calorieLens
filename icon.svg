@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#08080c" />
+      <stop offset="100%" stop-color="#0f1117" />
+    </linearGradient>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffa000" />
+      <stop offset="100%" stop-color="#ffb300" />
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" />
+  <!-- Outer Glow Ring -->
+  <circle cx="256" cy="256" r="180" fill="none" stroke="url(#goldGrad)" stroke-width="12" stroke-opacity="0.15" />
+  <!-- Inner Ring (representing lens) -->
+  <circle cx="256" cy="256" r="140" fill="none" stroke="url(#logoGrad)" stroke-width="8" />
+  <!-- Salad / Star icon inside -->
+  <g transform="translate(186, 186)">
+    <!-- A stylized Salad Bowl with a green leaf and a sparkling lens star -->
+    <path d="M 20 60 A 50 50 0 0 0 120 60 Z" fill="url(#goldGrad)" />
+    <!-- Leaf -->
+    <path d="M 60 40 C 60 10, 100 10, 100 40 C 100 60, 60 60, 60 40 Z" fill="#22c55e" />
+    <!-- Lens Star sparkle -->
+    <path d="M 70 10 L 73 25 L 88 28 L 73 31 L 70 46 L 67 31 L 52 28 L 67 25 Z" fill="#ffffff" />
+  </g>
+</svg>

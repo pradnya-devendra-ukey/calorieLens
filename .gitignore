@@ -17,3 +17,15 @@ backend/.env
 # OS
 .DS_Store
 Thumbs.db
+
+# Databases & Logs
+*.json
+!manifest.json
+*.log
+backend/data.json
+data.json
+backend/error_response.log
+
+# Scratch scripts
+scratch/
+
